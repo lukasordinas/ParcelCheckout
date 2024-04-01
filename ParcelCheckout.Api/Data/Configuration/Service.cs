@@ -12,4 +12,6 @@ public class Service
     public string Description { get; set; } = default!;
 
     public int Price { get; set; }
+
+    public Multibuy? Multibuy { get; set; }
 }

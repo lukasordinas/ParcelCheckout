@@ -12,6 +12,4 @@ public class Multibuy
     public int Amount { get; set; }
 
     public int Price { get; set; }
-
-    public Multibuy? MultibuyDiscount { get; set; }
 }

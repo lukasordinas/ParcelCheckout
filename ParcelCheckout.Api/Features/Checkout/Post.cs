@@ -1,4 +1,6 @@
-﻿using ParcelCheckout.Api.Core;
+﻿using Microsoft.EntityFrameworkCore;
+using ParcelCheckout.Api.Core;
+using ParcelCheckout.Api.Data.Configuration;
 
 namespace ParcelCheckout.Api.Features.HealthCheck;
 
@@ -18,6 +20,19 @@ public class Post : IEndpoint
 
     internal static async Task<IResult> HandleAsync(Data.DTOs.CheckoutCriteria requestDto, Data.Configuration.DbContext dbContext)
     {
-        return TypedResults.Ok(1);
+        var categories = requestDto.Services.Distinct();
+
+        foreach (var category in categories)
+        {
+            var service = dbContext.Services.Include(s => s.Multibuy).Single(s => s.Category == category);
+            var count = requestDto.Services.Where(s => s == category).Count();
+        }
+
+        return TypedResults.Ok(-1);
+    }
+
+    internal static int GetCost(Service service, int count)
+    {
+        return -1;
     }
 }
