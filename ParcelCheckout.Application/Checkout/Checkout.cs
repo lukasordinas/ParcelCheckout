@@ -6,20 +6,20 @@ namespace ParcelCheckout.Application.Checkout
     {
         private readonly List<char> _basket = [];
 
-        public void Scan(char service)
+        public void Scan(char category)
         {
-            _basket.Add(char.ToLower(service));
+            _basket.Add(char.ToLower(category));
         }
 
         public int GetTotalPrice(IEnumerable<Service> configuration)
         {
-            var distinctItems = _basket.Distinct();
+            var distinctCategories = _basket.Distinct();
             int totalPrice = 0;
 
-            foreach (var item in distinctItems)
+            foreach (var dc in distinctCategories)
             {
-                var service = configuration.Single(s => char.ToLower(s.Category) == item);
-                var amount = _basket.Where(s => s == item).Count();
+                var service = configuration.Single(s => char.ToLower(s.Category) == dc);
+                var amount = _basket.Where(s => s == dc).Count();
 
                 if (service.Multibuy is not null)
                 {
