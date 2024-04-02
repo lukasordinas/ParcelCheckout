@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Moq;
 using Moq.EntityFrameworkCore;
 using ParcelCheckout.Api.Data.DTOs;
+using ParcelCheckout.Api.Features.Checkout.Filters;
 using ParcelCheckout.Data.Configuration;
 
-namespace ParcelCheckout.Api.Features.Checkout.Filters.Tests;
+namespace ParcelCheckout.Api.Tests.Features.Checkout.Filters;
 
 [TestFixture]
 internal class CheckoutBasketFilterTests

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ParcelCheckout.Application"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParcelCheckout.Api.Tests", "ParcelCheckout.Api.Tests\ParcelCheckout.Api.Tests.csproj", "{C9E4C41A-784A-4C35-93FC-435F218A905A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParcelCheckout.Application.Tests", "ParcelCheckout.Application.Tests\ParcelCheckout.Application.Tests.csproj", "{6D932D97-C580-488B-A270-1F993105E3A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{C9E4C41A-784A-4C35-93FC-435F218A905A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9E4C41A-784A-4C35-93FC-435F218A905A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9E4C41A-784A-4C35-93FC-435F218A905A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6D932D97-C580-488B-A270-1F993105E3A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6D932D97-C580-488B-A270-1F993105E3A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D932D97-C580-488B-A270-1F993105E3A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6D932D97-C580-488B-A270-1F993105E3A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
