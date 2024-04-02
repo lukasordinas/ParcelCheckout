@@ -2,7 +2,12 @@
 
 namespace ParcelCheckout.Data.Configuration;
 
-public class DbContext(DbContextOptions options) : Microsoft.EntityFrameworkCore.DbContext(options)
+public class DbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     public virtual DbSet<Service> Services => Set<Service>();
+
+    public DbContext()
+        : base()
+    {
+    }
 }
