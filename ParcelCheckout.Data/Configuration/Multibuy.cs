@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 
-namespace ParcelCheckout.Api.Data.Configuration;
+namespace ParcelCheckout.Data.Configuration;
 
 [Table("Multibuys")]
 public class Multibuy

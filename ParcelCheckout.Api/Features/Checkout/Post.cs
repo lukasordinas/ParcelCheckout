@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ParcelCheckout.Api.Core;
-using ParcelCheckout.Api.Data.Configuration;
+using ParcelCheckout.Application.Checkout;
+using ParcelCheckout.Data.Configuration;
 
-namespace ParcelCheckout.Api.Features.HealthCheck;
+namespace ParcelCheckout.Api.Features.Checkout;
 
 public class Post : IEndpoint
 {
@@ -10,29 +11,36 @@ public class Post : IEndpoint
     {
         app.MapPost("/v1/checkout",
                 async (Data.DTOs.CheckoutCriteria requestDto,
-                Data.Configuration.DbContext dbContext) => await HandleAsync(requestDto, dbContext))
-            .WithSummary("Processes the order and returns the total cost.")
+                ParcelCheckout.Data.Configuration.DbContext dbContext,
+                ICheckout checkout) => await HandleAsync(requestDto, dbContext, checkout))
+            .WithSummary("Processes the order and returns the total cost in pence.")
             .WithOpenApi()
+            .AddEndpointFilter<Filters.CheckoutBasketFilter>()
             .Produces<int>(StatusCodes.Status200OK)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status500InternalServerError);
     }
 
-    internal static async Task<IResult> HandleAsync(Data.DTOs.CheckoutCriteria requestDto, Data.Configuration.DbContext dbContext)
+    internal static async Task<IResult> HandleAsync(Data.DTOs.CheckoutCriteria requestDto, ParcelCheckout.Data.Configuration.DbContext dbContext, ICheckout checkout)
     {
-        var categories = requestDto.Services.Distinct();
-
-        foreach (var category in categories)
+        // Input has been checked and validated by the filters.
+        try
         {
-            var service = dbContext.Services.Include(s => s.Multibuy).Single(s => s.Category == category);
-            var count = requestDto.Services.Where(s => s == category).Count();
+            var services = requestDto.Services;
+
+            foreach (var service in services)
+            {
+                checkout.Scan(service);
+            }
+
+            var configuration = await dbContext.Services.Include(s => s.Multibuy).ToListAsync();
+            var totalPrice = checkout.GetTotalPrice(configuration);
+
+            return TypedResults.Ok(totalPrice);
         }
-
-        return TypedResults.Ok(-1);
-    }
-
-    internal static int GetCost(Service service, int count)
-    {
-        return -1;
+        catch
+        {
+            return TypedResults.Problem(statusCode: StatusCodes.Status500InternalServerError, detail: "Unexpected exception.");
+        }
     }
 }
