@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ParcelCheckout.Api.Core;
 using ParcelCheckout.Application.Checkout;
-using ParcelCheckout.Data.Configuration;
 
 namespace ParcelCheckout.Api.Features.Checkout;
 
@@ -13,7 +12,7 @@ public class Post : IEndpoint
                 async (Data.DTOs.CheckoutCriteria requestDto,
                 ParcelCheckout.Data.Configuration.DbContext dbContext,
                 ICheckout checkout) => await HandleAsync(requestDto, dbContext, checkout))
-            .WithSummary("Processes the order and returns the total cost in pence.")
+            .WithSummary("Processes the order from a JSON array of chars and returns the total cost in pence.")
             .WithOpenApi()
             .AddEndpointFilter<Filters.CheckoutBasketFilter>()
             .Produces<int>(StatusCodes.Status200OK)

@@ -13,13 +13,13 @@ namespace ParcelCheckout.Application.Checkout
 
         public int GetTotalPrice(IEnumerable<Service> configuration)
         {
-            var distinctServices = _basket.Distinct();
+            var distinctItems = _basket.Distinct();
             int totalPrice = 0;
 
-            foreach (var d in distinctServices)
+            foreach (var item in distinctItems)
             {
-                var service = configuration.Single(s => char.ToLower(s.Category) == d);
-                var amount = _basket.Where(s => s == d).Count();
+                var service = configuration.Single(s => char.ToLower(s.Category) == item);
+                var amount = _basket.Where(s => s == item).Count();
 
                 if (service.Multibuy is not null)
                 {
